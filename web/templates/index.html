@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>drezdins gate</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm/css/xterm.css" />
+    <link rel="stylesheet" href="static/assets/main.css" />
+  </head>
+  <body>
+    <div id="content"> 
+      <ul class="inline-list">
+        <li>
+          <a href="https://www.kick.com/drezdin/" target="_blank"><img src="static/kick.png" /></a>
+        </li>
+        <li>
+          <a href="https://facebook.com/yourpage" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" 
+                 alt="Facebook" 
+                 width="80" height="80">
+          </a>
+        </li>
+        <li>
+          <a href="https://www.youtube.com/@drezOG" target="_blank"><img src="static/youtube-logo.png" /></a>
+        </li>
+        <li> 
+          <a href="/assets/johnjanes.-resume.pdf">
+            <img src="assets/resume.svg" />
+            Resume
+          </a>
+        </li>
+      </ul>
+
+      <div id="header"><!-- // --></div>
+      <div id="welcome">
+        <img id="logo" src="static/drezdin.png" />
+      </div>
+      <!-- <div id="terminal"></div> -->
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/_ZFtRmMuZ24&list=RD_ZFtRmMuZ24" 
+frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+allowfullscreen></iframe>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
+    <script>
+      const term = new Terminal({
+        theme: {
+          background: '#000000',
+          foreground: '#00FF00'
+        },
+        fontFamily: 'monospace',
+        fontSize: 14,
+      });
+      term.open(document.getElementById('terminal'));
+
+      term.writeln("TEST");
+
+      // Connect to WebSocket
+      // const socket = new WebSocket("wss://drezdin.com/dev/ws");
+
+      <!-- socket.addEventListener('open', () => { -->
+          <!--   term.writeln('Connected to server!'); -->
+          <!--   term.write('> '); -->
+          <!-- }); -->
+        <!---->
+        <!-- socket.addEventListener('message', (event) => { -->
+            <!--   term.writeln('\r\n' + event.data); -->
+            <!--   term.write('> '); -->
+            <!-- }); -->
+        <!---->
+        <!---->
+      term.onData(data => {
+        // socket.send(data);
+      });
+    </script>
+  </body>
+</html>
+
