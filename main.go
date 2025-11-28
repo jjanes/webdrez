@@ -2,26 +2,27 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"net/http"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
+	"log"
+	"net/http"
 )
 
 func main() {
 	r := gin.Default()
 	r.LoadHTMLGlob("./web/templates/*")
 
-	isKick, _ := IsKickStreamLive("drezdin")
+	// isKick, _ := IsKickStreamLive("drezdin")
 
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(200, "index.html", gin.H{
-			"message": "Hello, World!",
-			"kickIsLive": isKick,
+			"message":    "Hello, World!",
+			"kickIsLive": "blah",
 		})
 	})
 
 	r.Static("/static", "./web/static")
+	r.Static("/share", "./web/share")
 
 	r.GET("/dev", func(c *gin.Context) {
 		c.HTML(200, "index.html", gin.H{
