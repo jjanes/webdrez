@@ -1,28 +1,110 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/gorilla/websocket"
+	"html/template"
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
+	"time"
+	"webdrez/pkg/config"
+	"webdrez/pkg/kick"
+
+	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
 )
 
 func main() {
 	r := gin.Default()
-	r.LoadHTMLGlob("./web/templates/*")
+	r.LoadHTMLGlob("./web/templates/**")
 
+	live, err := kick.IsKickLive("drezdin")
+
+	go func() {
+		for true {
+			time.Sleep(2 * time.Minute)
+			live, err = kick.IsKickLive("drezdin")
+			if err != nil {
+				fmt.Println("error:", err)
+				continue
+			}
+			if live {
+				fmt.Println("KICK: LIVE")
+			} else {
+				fmt.Println("KICK: OFFLINE")
+			}
+		}
+	}()
+
+	if err != nil {
+		fmt.Println("error:", err)
+	} else {
+		if live {
+			fmt.Println("KICK: LIVE")
+		} else {
+			fmt.Println("KICK: OFFLINE")
+		}
+	}
+
+	config, err := config.Load("./config/main.json")
+
+	if err != nil {
+
+		panic(err)
+	}
+
+	data, err := os.ReadFile("data/icons.json")
+	if err != nil {
+		panic(err)
+	}
+
+	items := make(map[string]string)
+	if err := json.Unmarshal(data, &items); err != nil {
+		panic(err)
+	}
+
+	// Fix: Use template.HTML as value type from the start
+	icons := map[string]template.HTML{}
+
+	for key, value := range items {
+		icons[key] = template.HTML(value) // This now compiles!
+	}
 	// isKick, _ := IsKickStreamLive("drezdin")
+
+	for i, social := range config.Socials {
+		key := fmt.Sprintf("brand-%s", social.Name)
+		if icons[key] != "" {
+			config.Socials[i].Icon = icons[key]
+		}
+		switch social.Name {
+		case "twitch":
+		}
+	}
+
+	entries, err := os.ReadDir("./web/static/")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, e := range entries {
+		if e.IsDir() {
+			r.Static(e.Name(), filepath.Join("./web/static", e.Name()))
+		}
+	}
 
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(200, "index.html", gin.H{
+			"socials":    config.Socials,
+			"icons":      icons,
 			"message":    "Hello, World!",
 			"kickIsLive": "blah",
 		})
 	})
 
-	r.Static("/static", "./web/static")
-	r.Static("/share", "./web/share")
+	// 	r.Static("/static", "./web/static")
+	// 	r.Static("/share", "./web/share")
 
 	r.GET("/dev", func(c *gin.Context) {
 		c.HTML(200, "index.html", gin.H{

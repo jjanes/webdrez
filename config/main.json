@@ -1,0 +1,34 @@
+{
+  "socials": [
+    {
+      "name": "kick",
+      "user": "drezdin",
+      "url": "https://kick.com/drezdin"
+    }, 
+    {
+      "name": "twitch",
+      "user": "jjfish",
+      "url": "https://twitch.tv/jjfish"
+    },
+    {
+      "name": "youtube",
+      "user": "drezOG", 
+      "url": "https://youtube.com/@drezOG"
+    }, 
+    {
+      "name": "discord",
+      "user": "drez.zip", 
+      "url": "https://discord.com/drez.zip"
+    },
+    {
+      "name": "instagram",
+      "user": "jjfishii",
+      "url": "https://instagram.com/jjfishii" 
+    }, 
+    {
+      "name": "x",
+      "user": "jjfish",
+      "url": "https://x.com/jjfish"
+    }
+  ]
+}

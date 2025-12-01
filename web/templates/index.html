@@ -1,96 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>drezdins gate</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm/css/xterm.css" />
-    <link rel="stylesheet" href="static/assets/main.css" />
+<head>
+  <meta charset="UTF-8">
+  <title>drezdins gate</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm/css/xterm.css" />
+  <link rel="stylesheet" href="/assets/main.css" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-05PKGNWD7Y"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script src="/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-05PKGNWD7Y');
+  </script>
+</head>
+<body>
+  <div id="content">
+    <div id="header"><!-- // --></div>
+    <div id="welcome">
+      <img id="logo" src="/images/drezdin.png" />
+  
 
-  gtag('config', 'G-05PKGNWD7Y');
-</script>
-  </head>
-  <body>
-    <div id="content">
-      <div id="header"><!-- // --></div>
-      <div id="welcome">
-        <img id="logo" src="static/drezdin.png" />
-      </div>
 
-
-      <div style="width:100%;text-align:center;background-color:#000;">
-        <div style="width:600px;margin: 0 auto;">
-        <ul class="inline-list" style="margin: 0 auto;">
-          <li>
-            <a href="https://www.kick.com/drezdin/" target="_blank"><img src="static/kick.png" /></a>
-          </li>
-          <li>
-            <a href="https://youtube.com/@drezOG" target="_blank">
-              <img src="static/youtube-logo.png" />
-            </a>
-          </li>
-          <li style="text-align:center;">
-            <ul>
-              <li>
-                <a href="https://facebook.com/the.johnjanes" target="_blank" class="blur-link">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg" alt="Facebook" width="80" height="80">
-                </a>
-              </li>
-              <!--
-              <li>
-                <a href="https://x.com/jjfish" target="_blank">
-                  <img src="static/x.svg" width="100" height="100" />
-                </a>
-              </li>
-              -->
-              <li>  
-                <a href="https://www.instagram.com/jjfishii">
-                  <img src="static/insta.webp" width="100" height="100" target="_blank" />
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
+    <!-- socials-->
+    <div id="socials" class="clearfix">
+    <ul>
+    {{ range $name, $social := .socials }}
+      <li>
+        <div>
+          <a href="{{ $social.Url }}" target="_blank">
+          {{ $social.Icon }}
+          </a>
         </div>
-      </div>
+      </li>
+    {{ end }}
+    </ul>
+    <!-- socials end -->
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
-    <script>
-      const term = new Terminal({
-        theme: {
-          background: '#000000',
-          foreground: '#00FF00'
-        },
-        fontFamily: 'monospace',
-        fontSize: 14,
-      });
-      term.open(document.getElementById('terminal'));
+    <div class="kick-embed-wrapper">
+      <iframe
+        src="https://player.kick.com/drezdin"
+        allowfullscreen
+        allow="autoplay; encrypted-media; picture-in-picture"
+      ></iframe>
+  </div>
 
-      term.writeln("TEST");
-
-      // Connect to WebSocket
-      // const socket = new WebSocket("wss://drezdin.com/dev/ws");
-
-      <!-- socket.addEventListener('open', () => { -->
-          <!--   term.writeln('Connected to server!'); -->
-          <!--   term.write('> '); -->
-          <!-- }); -->
-        <!---->
-        <!-- socket.addEventListener('message', (event) => { -->
-            <!--   term.writeln('\r\n' + event.data); -->
-            <!--   term.write('> '); -->
-            <!-- }); -->
-        <!---->
-        <!---->
-      term.onData(data => {
-        // socket.send(data);
-      });
-    </script>
-  </body>
+</div>
+</body>
 </html>
-
